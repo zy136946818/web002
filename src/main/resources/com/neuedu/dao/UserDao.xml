@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neuedu.dao.UserDao">
+    <insert id="insertUser">
+        insert into user (username, password, email, phone, question, answer, role, create_time, update_time) VALUES
+        (#{username},#{password},#{email},#{phone},#{question},#{answer},#{role},NOW(),NOW())
+    </insert>
+    <delete id="deleteUser">
+        delete from user where id=#{id}
+    </delete>
+    <select id="getLogin" resultType="User">
+        select username,password from user where username=#{username} and password=#{password}
+    </select>
+    <select id="getUpdate" resultType="java.lang.String">
+        select password from user where password=#{password}
+
+    </select>
+    <select id="getUser" resultType="User">
+        select * from user
+    </select>
+    <select id="getOneById" resultType="User">
+        select  * from  user where id=${id}
+    </select>
+    <update id="updatePass">
+        update user set password = #{newPassword} where password=#{password}
+    </update>
+    <update id="updateUser">
+        update user
+        <set>
+            <trim suffixOverrides=",">
+                <if test="username != null">
+                    username=#{username},
+                </if>
+                <if test="password != null">
+                    password=#{password},
+                </if>
+                <if test="email != null">
+                    email=#{email},
+                </if>
+                <if test="phone != null">
+                    phone=#{phone},
+                </if>
+                <if test="question != null">
+                    question=#{question},
+                </if>
+                <if test="answer != null">
+                    answer=#{answer},
+                </if>
+                <if test="role != null">
+                    role=#{role},
+                </if>
+                <if test="update_time == null">
+                    update_time=NOW(),
+                </if>
+
+            </trim>
+        </set>
+        where  id=#{id};
+
+    </update>
+
+</mapper>

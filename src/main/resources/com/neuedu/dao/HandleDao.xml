@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neuedu.dao.HandleDao">
+    <resultMap id="handle" type="com.neuedu.pojo.Handle">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="status" property="status"/>
+        <result column="img"    property="img"/>
+        <result column="sort_order" property="sortOrder"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <insert id="insertHandle">
+        insert into handle (img,name,sort_order,create_time) values
+        (#{img},#{name},#{sortOrder},NOW())
+    </insert>
+    <update id="updateHandle">
+        update handle set img=#{img},name=#{name},sort_order=#{sortOrder},update_time=NOW() where id=#{id}
+    </update>
+    <delete id="deleteHandle">
+        delete from handle where id=#{id}
+    </delete>
+
+    <select id="getHandles" resultMap="handle">
+        select * from handle
+        <where>
+            <if test="name!= null">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+    <select id="getOneById" resultMap="handle">
+        select id,img,name,sort_order from handle where id = #{id};
+    </select>
+</mapper>
