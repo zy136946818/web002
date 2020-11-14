@@ -1,9 +1,7 @@
 package com.neuedu.service;
 
 import com.neuedu.dao.HandleDao;
-import com.neuedu.dao.UserDao;
 import com.neuedu.pojo.Handle;
-import com.neuedu.pojo.User;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
